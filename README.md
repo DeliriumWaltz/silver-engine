@@ -34,7 +34,9 @@ The initial MVP is a Go-based chat server with:
 ├── tests/integration/     # Binary-level integration tests
 ├── docs/                  # Design documents
 ├── go.mod
-└── Makefile
+├── Makefile
+├── Dockerfile             # Multi-stage Docker build
+└── docker-compose.yml     # One-command startup
 ```
 
 ### Quick Start
@@ -46,6 +48,23 @@ make test
 # Build and run the server
 make run
 # Server starts on :8080 (or $PORT)
+
+# Or with Docker
+docker compose up --build
+# Server starts on http://localhost:8080
+```
+
+### Docker
+
+```bash
+# Build and run with compose
+docker compose up --build
+
+# Build image directly
+docker build -t silver-engine/chat-server .
+
+# Run standalone
+docker run -p 8080:8080 silver-engine/chat-server
 ```
 
 ### Storage Interface

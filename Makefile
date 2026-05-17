@@ -1,4 +1,4 @@
-.PHONY: all build test test-unit test-integration test-all clean run
+.PHONY: all build test test-unit test-integration test-all clean run docker-build docker-run
 
 BINARY=chat-server
 BINARY_PATH=./bin/$(BINARY)
@@ -26,6 +26,15 @@ clean:
 	rm -rf bin/
 	go clean -cache
 
-# TDD watch mode helper (requires fswatch or similar)
-# watch:
-#	while inotifywait -r -e modify .; do make test; done
+# Docker targets
+docker-build:
+	docker build -t silver-engine/chat-server:latest .
+
+docker-run: docker-build
+	docker run -p 8080:8080 silver-engine/chat-server:latest
+
+docker-compose-up:
+	docker compose up --build
+
+docker-compose-down:
+	docker compose down
